@@ -1,0 +1,51 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";//si no esta esto, cargara el loyout por defecto
+}
+
+
+<div class="row" style="text-align:center;">
+    <form id="frm" class="col-lg-6">
+        <div>
+            <div>
+                <img id="Imagen" src="~/img/Imagen4.png">
+            </div>
+            <div class="form-element">
+                <label for="email" style="padding-left: 4%;">Usuario:</label>
+                <input type="text" name="email" value="" />
+            </div>
+            <div class="form-element">
+                <label for="pass">Contraseña:</label>
+                <input type="password" name="pass" value="" />
+            </div>
+            <input type="submit" value="Entrar" class="btn btn-success" />
+         </div>
+    </form>
+</div>
+
+@section scripts{
+    <script>
+
+        $(document).ready(function () {
+            $("#frm").submit(function (e) {
+                e.preventDefault();
+                url = "@Url.Content("~/Acceso/Entrar")"
+                parametros = $(this).serialize();
+
+                $.post(url, parametros, function (data) {
+                    if (data == "1")
+                    {
+                        alert("Bienvenido");
+                        document.location.href = "@Url.Content("~/")";
+                    }
+                    else
+                    {
+                        alert(data);
+                    }
+                })
+            })
+        })
+    </script>
+}
+

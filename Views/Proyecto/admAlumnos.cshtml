@@ -1,0 +1,55 @@
+﻿
+@model List<CursoMVC.Models.TablesViewModels.AlumnoxProyectoTableViewModel>
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="row textocentrado">
+    <h2>Alumnos en el proyecto</h2>
+    <div class="col-lg-12">
+        <br />
+        <table class="table table-hover">
+            <thead>
+                <tr class="info">
+                    <th class="textocentrado">#</th>
+                    
+                    <th class="textocentrado">Nombre</th>
+                    <th class="textocentrado">Proyecto</th>
+                    <th class="textocentrado"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var elemento in Model)
+                {
+                <tr class="active">
+                    <td>@elemento.Id</td>
+                    
+                    <td>@elemento.Nombre</td>
+                    <td>@elemento.Id_proyecto</td>
+                    <td>
+                        <input type="button" class="btn btn-danger" value="Quitar alumno" onclick="jsdelete(@elemento.Id);" />
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+        <input type="button" name="Nalumno" value="Agregar nuevo alumno" onclick="document.location.href='@Url.Content("~/Proyecto/addAXP")'" class="btn btn-success" />
+
+    </div>
+</div>
+
+<script>
+
+    function jsdelete(id) {
+        if (confirm("¿Estas seguro que deseas eliminar a este alumno del proyecto?")) {
+            url = "@Url.Content("~/Proyecto/borrarAXP")" + "/" + id;
+            $.post(url, function (data) {
+                if (data == "1") {
+                    document.location.href = "@Url.Content("~/Proyecto/")"
+                }
+                else { alert("Error") }
+            })
+        }
+    }
+</script>
+

@@ -1,0 +1,419 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="modelo_dual_aspModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="alumnos_dual">
+          <Key>
+            <PropertyRef Name="IdAlumno" />
+          </Key>
+          <Property Name="IdAlumno" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Matricula" Type="int" Nullable="false" />
+          <Property Name="Nombre_Alumno" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Apellido_Alumno" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Fecha_Nacimiento_Alumno" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AlumnoXProyecto">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id_Alumno" Type="int" Nullable="false" />
+          <Property Name="Id_Proyecto" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Asesores_dual">
+          <Key>
+            <PropertyRef Name="IdAsesor" />
+          </Key>
+          <Property Name="IdAsesor" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NSS" Type="int" Nullable="false" />
+          <Property Name="Nombre_Asesor" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Apellido_Asesor" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Fecha_Nacimiento_Asesor" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AsesorXProyecto">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id_Asesor" Type="int" Nullable="false" />
+          <Property Name="Id_Proyecto" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Estado">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Estado" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Proyecto">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Fecha_Inicio" Type="datetime" Nullable="false" />
+          <Property Name="Fecha_Fin" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="IdEstado" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_AlumnoXProyecto_alumnos_dual">
+          <End Role="alumnos_dual" Type="Self.alumnos_dual" Multiplicity="1" />
+          <End Role="AlumnoXProyecto" Type="Self.AlumnoXProyecto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="alumnos_dual">
+              <PropertyRef Name="IdAlumno" />
+            </Principal>
+            <Dependent Role="AlumnoXProyecto">
+              <PropertyRef Name="Id_Alumno" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AlumnoXProyecto_Proyecto">
+          <End Role="Proyecto" Type="Self.Proyecto" Multiplicity="1" />
+          <End Role="AlumnoXProyecto" Type="Self.AlumnoXProyecto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proyecto">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AlumnoXProyecto">
+              <PropertyRef Name="Id_Proyecto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AsesorXProyecto_Asesores_dual">
+          <End Role="Asesores_dual" Type="Self.Asesores_dual" Multiplicity="1" />
+          <End Role="AsesorXProyecto" Type="Self.AsesorXProyecto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Asesores_dual">
+              <PropertyRef Name="IdAsesor" />
+            </Principal>
+            <Dependent Role="AsesorXProyecto">
+              <PropertyRef Name="Id_Asesor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AsesorXProyecto_Proyecto">
+          <End Role="Proyecto" Type="Self.Proyecto" Multiplicity="1" />
+          <End Role="AsesorXProyecto" Type="Self.AsesorXProyecto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proyecto">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AsesorXProyecto">
+              <PropertyRef Name="Id_Proyecto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuario_Estado">
+          <End Role="Estado" Type="Self.Estado" Multiplicity="1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estado">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="IdEstado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="modelo_dual_aspModelStoreContainer">
+          <EntitySet Name="alumnos_dual" EntityType="Self.alumnos_dual" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AlumnoXProyecto" EntityType="Self.AlumnoXProyecto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Asesores_dual" EntityType="Self.Asesores_dual" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AsesorXProyecto" EntityType="Self.AsesorXProyecto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Estado" EntityType="Self.Estado" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Proyecto" EntityType="Self.Proyecto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_AlumnoXProyecto_alumnos_dual" Association="Self.FK_AlumnoXProyecto_alumnos_dual">
+            <End Role="alumnos_dual" EntitySet="alumnos_dual" />
+            <End Role="AlumnoXProyecto" EntitySet="AlumnoXProyecto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AlumnoXProyecto_Proyecto" Association="Self.FK_AlumnoXProyecto_Proyecto">
+            <End Role="Proyecto" EntitySet="Proyecto" />
+            <End Role="AlumnoXProyecto" EntitySet="AlumnoXProyecto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AsesorXProyecto_Asesores_dual" Association="Self.FK_AsesorXProyecto_Asesores_dual">
+            <End Role="Asesores_dual" EntitySet="Asesores_dual" />
+            <End Role="AsesorXProyecto" EntitySet="AsesorXProyecto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AsesorXProyecto_Proyecto" Association="Self.FK_AsesorXProyecto_Proyecto">
+            <End Role="Proyecto" EntitySet="Proyecto" />
+            <End Role="AsesorXProyecto" EntitySet="AsesorXProyecto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuario_Estado" Association="Self.FK_Usuario_Estado">
+            <End Role="Estado" EntitySet="Estado" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="modelo_dual_aspModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="modelo_dual_aspEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="alumnos_dual" EntityType="modelo_dual_aspModel.alumnos_dual" />
+          <EntitySet Name="AlumnoXProyecto" EntityType="modelo_dual_aspModel.AlumnoXProyecto" />
+          <EntitySet Name="Asesores_dual" EntityType="modelo_dual_aspModel.Asesores_dual" />
+          <EntitySet Name="AsesorXProyecto" EntityType="modelo_dual_aspModel.AsesorXProyecto" />
+          <EntitySet Name="Estado" EntityType="modelo_dual_aspModel.Estado" />
+          <EntitySet Name="Proyecto" EntityType="modelo_dual_aspModel.Proyecto" />
+          <EntitySet Name="Usuario" EntityType="modelo_dual_aspModel.Usuario" />
+          <AssociationSet Name="FK_AlumnoXProyecto_alumnos_dual" Association="modelo_dual_aspModel.FK_AlumnoXProyecto_alumnos_dual">
+            <End Role="alumnos_dual" EntitySet="alumnos_dual" />
+            <End Role="AlumnoXProyecto" EntitySet="AlumnoXProyecto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AlumnoXProyecto_Proyecto" Association="modelo_dual_aspModel.FK_AlumnoXProyecto_Proyecto">
+            <End Role="Proyecto" EntitySet="Proyecto" />
+            <End Role="AlumnoXProyecto" EntitySet="AlumnoXProyecto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AsesorXProyecto_Asesores_dual" Association="modelo_dual_aspModel.FK_AsesorXProyecto_Asesores_dual">
+            <End Role="Asesores_dual" EntitySet="Asesores_dual" />
+            <End Role="AsesorXProyecto" EntitySet="AsesorXProyecto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AsesorXProyecto_Proyecto" Association="modelo_dual_aspModel.FK_AsesorXProyecto_Proyecto">
+            <End Role="Proyecto" EntitySet="Proyecto" />
+            <End Role="AsesorXProyecto" EntitySet="AsesorXProyecto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuario_Estado" Association="modelo_dual_aspModel.FK_Usuario_Estado">
+            <End Role="Estado" EntitySet="Estado" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="alumnos_dual">
+          <Key>
+            <PropertyRef Name="IdAlumno" />
+          </Key>
+          <Property Name="IdAlumno" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Matricula" Type="Int32" Nullable="false" />
+          <Property Name="Nombre_Alumno" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Apellido_Alumno" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_Nacimiento_Alumno" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="AlumnoXProyecto" Relationship="modelo_dual_aspModel.FK_AlumnoXProyecto_alumnos_dual" FromRole="alumnos_dual" ToRole="AlumnoXProyecto" />
+        </EntityType>
+        <EntityType Name="AlumnoXProyecto">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_Alumno" Type="Int32" Nullable="false" />
+          <Property Name="Id_Proyecto" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="alumnos_dual" Relationship="modelo_dual_aspModel.FK_AlumnoXProyecto_alumnos_dual" FromRole="AlumnoXProyecto" ToRole="alumnos_dual" />
+          <NavigationProperty Name="Proyecto" Relationship="modelo_dual_aspModel.FK_AlumnoXProyecto_Proyecto" FromRole="AlumnoXProyecto" ToRole="Proyecto" />
+        </EntityType>
+        <EntityType Name="Asesores_dual">
+          <Key>
+            <PropertyRef Name="IdAsesor" />
+          </Key>
+          <Property Name="IdAsesor" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NSS" Type="Int32" Nullable="false" />
+          <Property Name="Nombre_Asesor" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Apellido_Asesor" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_Nacimiento_Asesor" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="AsesorXProyecto" Relationship="modelo_dual_aspModel.FK_AsesorXProyecto_Asesores_dual" FromRole="Asesores_dual" ToRole="AsesorXProyecto" />
+        </EntityType>
+        <EntityType Name="AsesorXProyecto">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_Asesor" Type="Int32" Nullable="false" />
+          <Property Name="Id_Proyecto" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Asesores_dual" Relationship="modelo_dual_aspModel.FK_AsesorXProyecto_Asesores_dual" FromRole="AsesorXProyecto" ToRole="Asesores_dual" />
+          <NavigationProperty Name="Proyecto" Relationship="modelo_dual_aspModel.FK_AsesorXProyecto_Proyecto" FromRole="AsesorXProyecto" ToRole="Proyecto" />
+        </EntityType>
+        <EntityType Name="Estado">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Estado1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Usuario" Relationship="modelo_dual_aspModel.FK_Usuario_Estado" FromRole="Estado" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="Proyecto">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_Inicio" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Fecha_Fin" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="AlumnoXProyecto" Relationship="modelo_dual_aspModel.FK_AlumnoXProyecto_Proyecto" FromRole="Proyecto" ToRole="AlumnoXProyecto" />
+          <NavigationProperty Name="AsesorXProyecto" Relationship="modelo_dual_aspModel.FK_AsesorXProyecto_Proyecto" FromRole="Proyecto" ToRole="AsesorXProyecto" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IdEstado" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Estado" Relationship="modelo_dual_aspModel.FK_Usuario_Estado" FromRole="Usuario" ToRole="Estado" />
+        </EntityType>
+        <Association Name="FK_AlumnoXProyecto_alumnos_dual">
+          <End Type="modelo_dual_aspModel.alumnos_dual" Role="alumnos_dual" Multiplicity="1" />
+          <End Type="modelo_dual_aspModel.AlumnoXProyecto" Role="AlumnoXProyecto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="alumnos_dual">
+              <PropertyRef Name="IdAlumno" />
+            </Principal>
+            <Dependent Role="AlumnoXProyecto">
+              <PropertyRef Name="Id_Alumno" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AlumnoXProyecto_Proyecto">
+          <End Type="modelo_dual_aspModel.Proyecto" Role="Proyecto" Multiplicity="1" />
+          <End Type="modelo_dual_aspModel.AlumnoXProyecto" Role="AlumnoXProyecto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proyecto">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AlumnoXProyecto">
+              <PropertyRef Name="Id_Proyecto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AsesorXProyecto_Asesores_dual">
+          <End Type="modelo_dual_aspModel.Asesores_dual" Role="Asesores_dual" Multiplicity="1" />
+          <End Type="modelo_dual_aspModel.AsesorXProyecto" Role="AsesorXProyecto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Asesores_dual">
+              <PropertyRef Name="IdAsesor" />
+            </Principal>
+            <Dependent Role="AsesorXProyecto">
+              <PropertyRef Name="Id_Asesor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AsesorXProyecto_Proyecto">
+          <End Type="modelo_dual_aspModel.Proyecto" Role="Proyecto" Multiplicity="1" />
+          <End Type="modelo_dual_aspModel.AsesorXProyecto" Role="AsesorXProyecto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proyecto">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AsesorXProyecto">
+              <PropertyRef Name="Id_Proyecto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuario_Estado">
+          <End Type="modelo_dual_aspModel.Estado" Role="Estado" Multiplicity="1" />
+          <End Type="modelo_dual_aspModel.Usuario" Role="Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estado">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="IdEstado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="modelo_dual_aspModelStoreContainer" CdmEntityContainer="modelo_dual_aspEntities">
+          <EntitySetMapping Name="alumnos_dual">
+            <EntityTypeMapping TypeName="modelo_dual_aspModel.alumnos_dual">
+              <MappingFragment StoreEntitySet="alumnos_dual">
+                <ScalarProperty Name="Fecha_Nacimiento_Alumno" ColumnName="Fecha_Nacimiento_Alumno" />
+                <ScalarProperty Name="Apellido_Alumno" ColumnName="Apellido_Alumno" />
+                <ScalarProperty Name="Nombre_Alumno" ColumnName="Nombre_Alumno" />
+                <ScalarProperty Name="Matricula" ColumnName="Matricula" />
+                <ScalarProperty Name="IdAlumno" ColumnName="IdAlumno" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AlumnoXProyecto">
+            <EntityTypeMapping TypeName="modelo_dual_aspModel.AlumnoXProyecto">
+              <MappingFragment StoreEntitySet="AlumnoXProyecto">
+                <ScalarProperty Name="Id_Proyecto" ColumnName="Id_Proyecto" />
+                <ScalarProperty Name="Id_Alumno" ColumnName="Id_Alumno" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Asesores_dual">
+            <EntityTypeMapping TypeName="modelo_dual_aspModel.Asesores_dual">
+              <MappingFragment StoreEntitySet="Asesores_dual">
+                <ScalarProperty Name="Fecha_Nacimiento_Asesor" ColumnName="Fecha_Nacimiento_Asesor" />
+                <ScalarProperty Name="Apellido_Asesor" ColumnName="Apellido_Asesor" />
+                <ScalarProperty Name="Nombre_Asesor" ColumnName="Nombre_Asesor" />
+                <ScalarProperty Name="NSS" ColumnName="NSS" />
+                <ScalarProperty Name="IdAsesor" ColumnName="IdAsesor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AsesorXProyecto">
+            <EntityTypeMapping TypeName="modelo_dual_aspModel.AsesorXProyecto">
+              <MappingFragment StoreEntitySet="AsesorXProyecto">
+                <ScalarProperty Name="Id_Proyecto" ColumnName="Id_Proyecto" />
+                <ScalarProperty Name="Id_Asesor" ColumnName="Id_Asesor" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Estado">
+            <EntityTypeMapping TypeName="modelo_dual_aspModel.Estado">
+              <MappingFragment StoreEntitySet="Estado">
+                <ScalarProperty Name="Estado1" ColumnName="Estado" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Proyecto">
+            <EntityTypeMapping TypeName="modelo_dual_aspModel.Proyecto">
+              <MappingFragment StoreEntitySet="Proyecto">
+                <ScalarProperty Name="Fecha_Fin" ColumnName="Fecha_Fin" />
+                <ScalarProperty Name="Fecha_Inicio" ColumnName="Fecha_Inicio" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuario">
+            <EntityTypeMapping TypeName="modelo_dual_aspModel.Usuario">
+              <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="IdEstado" ColumnName="IdEstado" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

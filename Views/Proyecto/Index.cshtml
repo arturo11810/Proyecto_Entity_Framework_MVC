@@ -1,0 +1,58 @@
+﻿@*Para importar un modelo a la vista (en este caso será el de alumnos)*@
+@model List<CursoMVC.Models.TablesViewModels.ProyectoTableViewModel>
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="row textocentrado">
+    <h2>Proyectos</h2>
+    <div class="col-lg-12">
+        <br />
+        <table class="table table-hover">
+            <thead>
+                <tr class="info">
+                    <th class="textocentrado">#</th>
+                    <th class="textocentrado">Nombre</th>
+                    <th class="textocentrado">Fecha de inicio</th>
+                    <th class="textocentrado">Fecha de finalización</th>
+                    <th class="textocentrado"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var elemento in Model)
+                {
+                <tr class="active">
+                    <td>@elemento.Id</td>
+                    <td>@elemento.Nombre</td>
+                    <td>@elemento.Fechainicio.ToString("dd/MM/yyyy")</td>
+                    <td>@elemento.Fechafin.ToString("dd/MM/yyyy")</td>
+                    <td>
+                        <input type="button" class="btn btn-danger" value="Borrar" onclick="jsdelete(@elemento.Id);" />
+                        <input type="button" class="btn btn-info" value="Editar" onclick="document.location.href='@Url.Content("~/Proyecto/editar/"+elemento.Id)'" />
+                        <input type="button" class="btn btn-default" value="Alumnos" onclick="document.location.href='@Url.Content("~/Proyecto/admAlumnos/"+elemento.Id)'" />
+                        <input type="button" class="btn btn-default" value="Asesores" onclick="document.location.href='@Url.Content("~/Proyecto/admAsesores/"+elemento.Id)'" />
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+        <input type="button" name="Nalumno" value="Nuevo proyecto" onclick="document.location.href='@Url.Content("~/Proyecto/add")'" class="btn btn-success" />
+
+    </div>
+</div>
+
+<script>
+
+    function jsdelete(id) {
+        if (confirm("¿Estas seguro que deseas eliminar este proyecto?")) {
+            url = "@Url.Content("~/Proyecto/borrar")" + "/" + id;
+            $.post(url, function (data) {
+                if (data == "1") {
+                    document.location.href = "@Url.Content("~/Proyecto/")"
+                }
+                else { alert("Error") }
+            })
+        }
+    }
+</script>
+

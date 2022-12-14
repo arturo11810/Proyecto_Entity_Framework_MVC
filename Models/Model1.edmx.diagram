@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="5197984422c54a14b7ecc6808350c4e5" Name="Diagram1" ZoomLevel="127">
+        <EntityTypeShape EntityType="modelo_dual_aspModel.alumnos_dual" Width="1.5" PointX="6.375" PointY="3.5" />
+        <EntityTypeShape EntityType="modelo_dual_aspModel.AlumnoXProyecto" Width="1.5" PointX="6.125" PointY="0.625" />
+        <EntityTypeShape EntityType="modelo_dual_aspModel.Asesores_dual" Width="1.5" PointX="0.625" PointY="3.75" />
+        <EntityTypeShape EntityType="modelo_dual_aspModel.AsesorXProyecto" Width="1.5" PointX="0.75" PointY="0.5" />
+        <EntityTypeShape EntityType="modelo_dual_aspModel.Estado" Width="1.5" PointX="8.875" PointY="4" />
+        <EntityTypeShape EntityType="modelo_dual_aspModel.Proyecto" Width="1.5" PointX="3.5" PointY="2.375" />
+        <EntityTypeShape EntityType="modelo_dual_aspModel.Usuario" Width="1.5" PointX="8.75" PointY="0.625" />
+        <AssociationConnector Association="modelo_dual_aspModel.FK_AlumnoXProyecto_alumnos_dual" />
+        <AssociationConnector Association="modelo_dual_aspModel.FK_AlumnoXProyecto_Proyecto" />
+        <AssociationConnector Association="modelo_dual_aspModel.FK_AsesorXProyecto_Asesores_dual" />
+        <AssociationConnector Association="modelo_dual_aspModel.FK_AsesorXProyecto_Proyecto" />
+        <AssociationConnector Association="modelo_dual_aspModel.FK_Usuario_Estado" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

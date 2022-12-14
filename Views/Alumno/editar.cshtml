@@ -1,0 +1,42 @@
+﻿@model CursoMVC.Models.ViewModels.AlumnoViewModel
+@{
+    ViewBag.Title = "Editar alumno";
+}
+
+<div class="row" style="margin-left: 0%;">
+    <br />
+    <div class="textocentrado">
+        <h1>@ViewBag.Title</h1>
+    </div>
+    <div class="borde1">
+        <div style="padding: 5%; padding-left: 40%;">
+            @using (Html.BeginForm("editar", "Alumno", FormMethod.Post, new { role = "form", @class = "" }))
+            {
+                @Html.HiddenFor(d => d.Id)//viene este parametro por que al entrar necesitamos saber el id (esta oculto)
+                @Html.AntiForgeryToken()
+                
+                @Html.ValidationMessage("error", new { @class = "text-danger" })
+
+                @Html.LabelFor(d => d.matricula)
+                @Html.TextBoxFor(d => d.matricula, new { @class = "form-control" })
+                @Html.ValidationMessage("matricula", new { @class = "text-danger" })<br />
+
+                @Html.LabelFor(d => d.nombre)
+                @Html.TextBoxFor(d => d.nombre, new { @class = "form-control" })
+                @Html.ValidationMessage("nombre", new { @class = "text-danger" })<br />
+
+                @Html.LabelFor(d => d.apellido)
+                @Html.TextBoxFor(d => d.apellido, new { @class = "form-control" })
+                @Html.ValidationMessage("apellido", new { @class = "text-danger" })<br />
+
+                @Html.LabelFor(d => d.fechan)
+                <input type="date" name="fechan" class="form-control" value="@Model.fechan.ToString("yyyy-MM-dd")" />
+                //@Html.TextBoxFor(d => d.fechan, new { @class = "form-control" })
+                @Html.ValidationMessage("fechan", new { @class = "text-danger" })<br />
+
+
+                <div style="padding-left:15%;"><input type="submit" class="btn btn-success" value="Guardar" /></div>
+            }
+        </div>
+    </div>
+</div>
